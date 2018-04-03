@@ -28,13 +28,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+       //Instance d'un nouvel objet utilisateur
         mUser = new User();
 
         //Connection aux widgets
         mGreetingText = findViewById(R.id.activity_main_greeting_txt);
         mNameInput = findViewById(R.id.activity_main_name_input);
         mPlayButon = findViewById(R.id.activity_main_play_btn);
-        //Desactive le bouton
+        //Désactive le bouton
         mPlayButon.setEnabled(false);
 
 
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //Active button Play or not
+                //Active ou désactive le bouton Play en fonction de la longueur du nom
                 mPlayButon.setEnabled(s.toString().length()>0);
             }
 
@@ -62,8 +63,11 @@ public class MainActivity extends AppCompatActivity {
         mPlayButon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Récupère le nom du EditText
                 String firstname = mNameInput.getText().toString();
+                //Initialise nom de l'utilisateur
                 mUser.setFirstname(firstname);
+                //Creer un intent pour passer de MainActivity -> GameActivity
                 Intent gameActivityIntent = new Intent(MainActivity.this,GameActivity.class);
                 startActivity(gameActivityIntent);
             }
