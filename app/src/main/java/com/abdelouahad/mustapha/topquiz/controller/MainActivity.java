@@ -23,8 +23,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText mNameInput;
     private Button mPlayButon;
     private User mUser;
-    private QuestionBank mQuestionBank;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         //Desactive le bouton
         mPlayButon.setEnabled(false);
 
-        mQuestionBank = this.generateQuestions();
+
 
         //Fonctions de traitement pour le champs EditText
         mNameInput.addTextChangedListener(new TextWatcher() {
@@ -50,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //Active button Play or not
                 mPlayButon.setEnabled(s.toString().length()>0);
             }
 
@@ -71,73 +70,5 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public QuestionBank generateQuestions(){
-        Question question1 = new Question("Who is the creator of Android?",
 
-                Arrays.asList("Andy Rubin",
-
-                        "Steve Wozniak",
-
-                        "Jake Wharton",
-
-                        "Paul Smith"),
-
-                0);
-
-        Question question2 = new Question("When did the first man land on the moon?",
-
-                Arrays.asList("1958",
-
-                        "1962",
-
-                        "1967",
-
-                        "1969"),
-
-                3);
-
-        Question question3 = new Question("What is the house number of The Simpsons?",
-
-                Arrays.asList("42",
-
-                        "101",
-
-                        "666",
-
-                        "742"),
-
-                3);
-
-        Question question4 = new Question("How many oscars did the Titanic movie got?",
-
-                Arrays.asList("Seven",
-
-                        "Ten",
-
-                        "Nine",
-
-                        "Eleven"),
-
-                3);
-
-        Question question5 = new Question("Which malformation did Marilyn Monroe have when she was born?",
-
-                Arrays.asList("Six toes",
-
-                        "Four fingers",
-
-                        "None",
-
-                        "Joker"),
-
-                0);
-        return new QuestionBank(Arrays.asList(
-                question1,
-                question2,
-                question3,
-                question4,
-                question5
-                ));
-
-    }
 }
