@@ -1,6 +1,7 @@
 package com.abdelouahad.mustapha.topquiz.controller;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +29,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private int mScore;
     private int mNumberOfQuestions;
+
+    public static final String TAG = GameActivity.class.getSimpleName();
+
+    public static final String BUNDLE_EXTRA_SCORE="BUNDLE_EXTRA_SCORE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +107,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() { //Creation d'un bouton positif
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(); //Création de l'intent
+                        intent.putExtra(BUNDLE_EXTRA_SCORE,mScore); //Associe le score à BUNDLE_EXTRA_SCORE
+                        setResult(RESULT_OK,intent);//Tout c'est bien passé
                         finish(); //Termine l'activité courante
                     }
                 })
