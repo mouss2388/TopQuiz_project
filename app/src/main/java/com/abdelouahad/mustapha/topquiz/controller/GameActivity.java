@@ -2,9 +2,11 @@ package com.abdelouahad.mustapha.topquiz.controller;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -33,6 +35,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public static final String TAG = GameActivity.class.getSimpleName();
 
     public static final String BUNDLE_EXTRA_SCORE="BUNDLE_EXTRA_SCORE";
+    private boolean mEnableTouchEvents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mScore =0;
         mNumberOfQuestions=4;
 
+
+        //Boolean pour activer la détection au touché de l'écran
+        mEnableTouchEvents= true;
         //Attribution d'un tag à chaque boutons
         mAnswerButton1.setTag(0);
         mAnswerButton2.setTag(1);
@@ -87,16 +93,29 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "Wrong Answer", Toast.LENGTH_SHORT).show();
         }
 
-        //Décrémentation du nombre de question restante
-        if (--mNumberOfQuestions == 0){
-            //Si 0 alors find e jeu
-            endGame();
-        }else{
-            //Sinon objet mCurrentQuestion est égal à la question suivante
-            mCurrentQuestion = mQuestionBank.getQuestion();
-            //Actualise l'affiche de la question
-            displayQuestion(mCurrentQuestion);
-        }
+        mEnableTouchEvents = false;
+        new Handler().postDelayed(new Runnable() { //Execute le code après 2 secondes
+            @Override
+            public void run() {
+                mEnableTouchEvents=true;
+                //Décrémentation du nombre de question restante
+                if (--mNumberOfQuestions == 0){
+                    //Si 0 alors find e jeu
+                    endGame();
+                }else{
+                    //Sinon objet mCurrentQuestion est égal à la question suivante
+                    mCurrentQuestion = mQuestionBank.getQuestion();
+                    //Actualise l'affiche de la question
+                    displayQuestion(mCurrentQuestion);
+                }
+            }
+        },2000);
+
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {//active ou non le toucher sur l'écran
+        return mEnableTouchEvents && super.dispatchTouchEvent(ev);
     }
 
     private void endGame(){
