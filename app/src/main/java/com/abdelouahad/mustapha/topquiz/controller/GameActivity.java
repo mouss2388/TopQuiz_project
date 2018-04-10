@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -41,6 +42,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        Log.i(TAG,"::onCreate()");
+
 
         //Connection aux Widgets (element graphique de l'interface)
         mQuestionTextView =findViewById(R.id.activity_game_question_text);
@@ -222,5 +226,34 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i(TAG,"::onStart()");
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG,"::onResume()");
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i(TAG,"::onPause()");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i(TAG,"::onStop()");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG,"::onDestroy()");
+    }
 }
