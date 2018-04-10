@@ -38,6 +38,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public static final String BUNDLE_EXTRA_SCORE="BUNDLE_EXTRA_SCORE";
     private boolean mEnableTouchEvents;
 
+    public static final String BUNDLE_STATE_SCORE="BUNDLE_STATE_SCORE";
+    public static final String BUNDLE_STATE_QUESTION="BUNDLE_STATE_QUESTION";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,9 +57,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mAnswerButton3 = findViewById(R.id.activity_game_answer3_btn);
         mAnswerButton4 = findViewById(R.id.activity_game_answer4_btn);
 
-        //Initialise le score et le nombre de question
-        mScore =0;
-        mNumberOfQuestions=4;
+
 
 
         //Boolean pour activer la détection au touché de l'écran
@@ -76,10 +78,27 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         //Objet mQuestionBank stock la banque de question généré par la méthode generateQuestions
         mQuestionBank = this.generateQuestions();
+
+        if(savedInstanceState != null){
+            mScore=savedInstanceState.getInt(BUNDLE_STATE_SCORE);
+            mNumberOfQuestions= savedInstanceState.getInt(BUNDLE_STATE_QUESTION);
+        }else{
+            //Initialise le score et le nombre de question
+            mScore =0;
+            mNumberOfQuestions=4;
+        }
         //Objet mCurrentQuestion récupère la quesiton actuelle provenant de mQuestionBank
         mCurrentQuestion = mQuestionBank.getQuestion();
         //Affichage de la question et de ses choix de réponse
         this.displayQuestion(mCurrentQuestion);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {//lorsque l'activité est détruite
+        //Sauvegarde le score et la question dans le Bundle grace aux key BUNDLE_STATE_*****
+        outState.putInt(BUNDLE_STATE_SCORE,mScore);
+        outState.putInt(BUNDLE_STATE_QUESTION,mNumberOfQuestions);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
